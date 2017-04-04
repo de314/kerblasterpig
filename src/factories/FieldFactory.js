@@ -31,13 +31,41 @@ const FieldFactory = {
     );
   },
 
-  bool({ field, onChange, stateValue }) {
+  email({ field, onChange, stateValue }) {
     const { label, path } = field;
     return (
       <FormGroup label={label}>
-        <input type="checkbox" onChange={e => onChange(path, e.target.checked)} className="form-control" checked={stateValue} />
+        <input type="email" onChange={e => onChange(path, e.target.value)} className="form-control" value={stateValue} />
       </FormGroup>
     );
+  },
+
+  bool({ field, onChange, stateValue }) {
+    const { label, path } = field;
+    return (
+      <div className="checkbox">
+        <label>
+          <input type="checkbox" onChange={e => onChange(path, e.target.checked)} checked={stateValue} />
+          { label }
+        </label>
+      </div>
+    );
+  },
+
+  radio({ field, onChange, stateValue }) {
+    const { label, path, options } = field;
+    return (
+      <FormGroup label={label}>
+        { options.map((op, i) => (
+          <div className="radio" key={i}>
+            <label>
+              <input type="radio" name={path} value={op.value} checked={op.value === stateValue} onChange={e => onChange(path, e.target.value)} />
+              { op.text }
+            </label>
+          </div>
+        ))}
+      </FormGroup>
+    )
   },
 
   text({ field, onChange, stateValue }) {
@@ -50,10 +78,24 @@ const FieldFactory = {
   },
 
   select({ field, onChange, stateValue }) {
-    const { label, path, options } = field;
+    const { label, path, options, multiple = false } = field;
+    function handleSingleChange(e) {
+      onChange(path, e.target.value)
+    }
+    function handleMultipleChange(e) {
+      const vals = [...e.target.options]
+        .filter(option => option.selected)
+        .map(option => option.value);
+      onChange(path, vals)
+    }
     return (
       <FormGroup label={label}>
-        <select className="form-control" onChange={e => onChange(path, e.target.value)} value={stateValue}>
+        <select
+          className="form-control"
+          onChange={multiple ? handleMultipleChange : handleSingleChange}
+          value={stateValue}
+          multiple={multiple}
+        >
           { options.map((op, i) => (
             <option value={op.value} key={i}>{op.text}</option>
           ))}

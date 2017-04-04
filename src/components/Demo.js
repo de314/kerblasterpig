@@ -5,15 +5,26 @@ import Form from '../containers/forms/Form'
 
 const fields = [
   { type: 'string', label: 'Name', path: '$.name' },
-  { label: 'Email', path: '$.email', defaultValue: '@bettercloud.com' },
+  { type: 'email', label: 'Email', path: '$.email', defaultValue: '@bettercloud.com' },
   { type: 'select', label: 'Employer', path: '$.profile.employer', options: [
       { value: 'bettercloud', text: 'BetterCloud' },
       { value: 'google', text: 'Google' },
       { value: 'twitter', text: 'Twitter' },
     ]},
+  { type: 'select', label: 'Roles', path: '$.perms.roles', multiple: true, options: [
+      { value: 'superuser', text: 'Super User' },
+      { value: 'employee', text: 'Employee' },
+      { value: 'developer', text: 'Developer' },
+      { value: 'tester', text: 'Tester' },
+    ]},
   { type: "text", label: 'Bio', path: '$.profile.bio' },
   { type: 'bool', label: 'Suspended', path: '$.profile.suspended', defaultValue: false },
-  { type: 'bool', label: 'Admin', path: '$.perms.admin', defaultValue: false }
+  { type: 'bool', label: 'Admin', path: '$.perms.admin', defaultValue: false },
+  { type: 'radio', label: 'Favorite Color', path: "$.profile.favs.color", options: [
+      { value: '#0000ff', text: "Blue" },
+      { value: '#ff0000', text: "Red" },
+      { value: '#00ff00', text: "Green" }
+    ]}
 ];
 
 const formDef = { fields }

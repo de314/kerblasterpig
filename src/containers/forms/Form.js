@@ -8,7 +8,7 @@ function initState({ model, definition, formState, setFormState }) {
   definition.fields.map(field => {
       const modelVal = jsonpath.read(model, field.path);
       let defaultVal = _.defaultTo(field.defaultValue, '');
-      if (field.type === 'select' && _.isUndefined(field.defaultValue)) {
+      if ((field.type === 'select' || field.type === 'radio') && _.isUndefined(field.defaultValue)) {
         defaultVal = field.options[0].value
       }
       return {
