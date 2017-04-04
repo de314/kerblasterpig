@@ -34,7 +34,13 @@ const profileFields = [
       { value: '#0000ff', text: "Blue" },
       { value: '#ff0000', text: "Red" },
       { value: '#00ff00', text: "Green" }
-    ]}
+    ]},
+  { type: 'code', label: 'JS Hacks', path: '$.hacks.js', mode: 'javascript', theme: 'monokai',
+      defaultValue: 'var worldMessage = "Hello, World!"\n\nfunction helloWorld(message) {\n\tconsole.log(message)\n}\n\nhelloWorld(worldMessage)'
+    },
+  { type: 'code', label: 'Java Hacks', path: '$.hacks.java', mode: 'java', theme: 'monokai',
+      defaultValue: '\npublic class HelloWorldPrinter {\n\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello, World!");\n\t}\n}'
+    }
 ];
 
 const profileFormDef = { fields: profileFields }

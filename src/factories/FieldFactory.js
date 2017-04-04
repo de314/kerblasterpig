@@ -106,12 +106,12 @@ const FieldFactory = {
   },
 
   code({ field, onChange, stateValue }) {
-    const { label, path, mode } = field;
+    const { label, path, mode, theme = "github" } = field;
     return (
       <FormGroup label={label}>
         <AceEditor
           mode={mode}
-          theme="github"
+          theme={theme}
           width="100%"
           value={stateValue}
           onChange={newVal => onChange(path, newVal)}
