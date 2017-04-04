@@ -1,10 +1,19 @@
 import React from 'react'
 import { withState, withHandlers, compose } from 'recompose'
+import uuid from '../utils/uuid'
 
 import Form from '../containers/forms/Form'
 
-const fields = [
-  { type: 'string', label: 'Name', path: '$.name' },
+const personSummaryFields = [
+  { type: 'string', label: 'Name', path: '$.name', defaultValue: 'Single' },
+  { type: 'string', label: 'Phone Number', path: '$.phone' },
+];
+
+const personSummaryFormDef = { fields: personSummaryFields };
+
+const profileFields = [
+  { label: 'Id', path: '$.id', defaultValue: uuid },
+  { label: 'Name', path: '$.name' },
   { type: 'email', label: 'Email', path: '$.email', defaultValue: '@bettercloud.com' },
   { type: 'select', label: 'Employer', path: '$.profile.employer', options: [
       { value: 'bettercloud', text: 'BetterCloud' },
@@ -17,7 +26,8 @@ const fields = [
       { value: 'developer', text: 'Developer' },
       { value: 'tester', text: 'Tester' },
     ]},
-  { type: "text", label: 'Bio', path: '$.profile.bio' },
+  { type: 'text', label: 'Bio', path: '$.profile.bio' },
+  { type: 'embedded', label: 'Spouse', path: '$.profile.spouse', definition: personSummaryFormDef },
   { type: 'bool', label: 'Suspended', path: '$.profile.suspended', defaultValue: false },
   { type: 'bool', label: 'Admin', path: '$.perms.admin', defaultValue: false },
   { type: 'radio', label: 'Favorite Color', path: "$.profile.favs.color", options: [
@@ -27,7 +37,7 @@ const fields = [
     ]}
 ];
 
-const formDef = { fields }
+const profileFormDef = { fields: profileFields }
 
 const model = {
   name: "Mr. David",
@@ -82,7 +92,7 @@ const Demo = ({ output, onSubmit, definition, setDefinition, model, setModel }) 
 
 export default compose(
   withState('output', 'setOutput', ''),
-  withState('definition', 'setDefinition', formDef),
+  withState('definition', 'setDefinition', profileFormDef),
   withState('model', 'setModel', model),
   withHandlers({
     onSubmit: props => formState => {

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import _ from 'lodash'
 
+import Form from '../containers/forms/Form'
 import AceEditor from 'react-ace'
 import 'brace/mode/json'
 import 'brace/mode/java'
@@ -118,7 +119,19 @@ const FieldFactory = {
         />
       </FormGroup>
     )
-  }
+  },
+
+  embedded({ field, onChange, stateValue }) {
+    const { label, path, definition } = field;
+    return (
+      <div>
+        <h3>{label}</h3>
+        <hr />
+        <Form model={stateValue} definition={definition} onSubmit={newVal => onChange(path, newVal)} embedded={true} />
+        <hr />
+      </div>
+    );
+  },
 };
 
 FieldFactory.get = (field, onChange, stateValue) => {
