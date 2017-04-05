@@ -51,8 +51,8 @@ Form.EmbeddedList = ({ definition, formState, onChange, onAdd, onRemove }) => {
 	return (
   	<div>
       { formState.map((embeddedFormState, i) => (
-        <div key={i}>
-          <div className="pull-right">
+        <div key={i} style={{ borderBottom: "2px dotted #ccc", paddingBottom: "1em", marginBottom: "2em" }}>
+          <div className="pull-right" style={{ marginTop: "-10px" }}>
             <button className="btn btn-xs btn-danger" onClick={() => onRemove(i)}>
               <i className="fa fa-trash"></i>
             </button>

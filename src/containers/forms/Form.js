@@ -78,6 +78,7 @@ const formEnhancer = compose(
     },
     componentWillReceiveProps(nextProps) {
       if (this.props.demo === true || nextProps.demo === true) {
+        // TODO: updated model is not populating the form, but is modifying formState.
         if (!_.isEqual(this.props.definition, nextProps.definition) || !_.isEqual(this.props.model, nextProps.model)) {
           initState(nextProps)
         }
