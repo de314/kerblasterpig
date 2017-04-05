@@ -126,9 +126,21 @@ const FieldFactory = {
     return (
       <div>
         <h3>{label}</h3>
-        <hr />
-        <Form model={stateValue} definition={definition} onSubmit={newVal => onChange(path, newVal)} embedded={true} />
-        <hr />
+        <div style={{ marginLeft: "2em", padding: "2em", borderLeft: "2px solid #ccc" }}>
+          <Form.Embedded model={stateValue} definition={definition} onSubmit={newVal => onChange(path, newVal)} />
+        </div>
+      </div>
+    );
+  },
+
+  embeddedList({ field, onChange, stateValue }) {
+    const { label, path, definition } = field;
+    return (
+      <div>
+        <h3>{label}</h3>
+        <div style={{ marginLeft: "2em", padding: "2em", borderLeft: "2px solid #ccc" }}>
+          <Form.EmbeddedList model={stateValue} definition={definition} onSubmit={newVal => onChange(path, newVal)} />
+        </div>
       </div>
     );
   },

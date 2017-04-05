@@ -11,6 +11,23 @@ const personSummaryFields = [
 
 const personSummaryFormDef = { fields: personSummaryFields };
 
+const childFields = [
+  { type: 'string', label: 'Name', path: '$.name', defaultVal: 'Hank' },
+  { type: 'select', label: 'Sex', path: "$.sex", options: [
+      { value: 'male', text: "Male" },
+      { value: 'female', text: "Female" },
+      { value: 'coptah', text: "Apache Attack Helicopter" }
+    ]},
+]
+
+const childFormDef = { fields: childFields }
+
+const smallFormDef = {
+  fields: [
+    { type: 'embeddedList', label: 'Children', path: '$.children', definition: childFormDef },
+  ]
+}
+
 const profileFields = [
   { label: 'Id', path: '$.id', defaultValue: uuid },
   { label: 'Name', path: '$.name' },
@@ -35,6 +52,7 @@ const profileFields = [
       { value: '#ff0000', text: "Red" },
       { value: '#00ff00', text: "Green" }
     ]},
+  { type: 'embeddedList', label: 'Children', path: '$.profile.children', definition: childFormDef },
   { type: 'code', label: 'JS Hacks', path: '$.hacks.js', mode: 'javascript', theme: 'monokai',
       defaultValue: 'var worldMessage = "Hello, World!"\n\nfunction helloWorld(message) {\n\tconsole.log(message)\n}\n\nhelloWorld(worldMessage)'
     },
@@ -55,6 +73,27 @@ const model = {
     admin: true,
     roles: [ 'employee', 'developer' ]
   }
+}
+
+const smallFormModel = {
+  "children": [
+    {
+      "name": "Hank",
+      "sex": "male"
+    },
+    {
+      "name": "Bash",
+      "sex": "coptah"
+    },
+    {
+      "name": "Princess Ele",
+      "sex": "female"
+    },
+    {
+      "name": "Fat Etsy",
+      "sex": "female"
+    }
+  ]
 }
 
 const Demo = ({ output, onSubmit, definition, setDefinition, model, setModel }) => {
@@ -84,7 +123,7 @@ const Demo = ({ output, onSubmit, definition, setDefinition, model, setModel }) 
         <div className="col-xs-6">
           <h3>Dynamic Form:</h3>
           <hr />
-          <Form model={model} definition={definition} onSubmit={onSubmit} />
+          <Form model={model} definition={definition} onSubmit={onSubmit} demo={true} />
         </div>
         <div className="col-xs-6">
           <h3>Output:</h3>
@@ -98,8 +137,8 @@ const Demo = ({ output, onSubmit, definition, setDefinition, model, setModel }) 
 
 export default compose(
   withState('output', 'setOutput', ''),
-  withState('definition', 'setDefinition', profileFormDef),
-  withState('model', 'setModel', model),
+  withState('definition', 'setDefinition', smallFormDef), // profileFormDef
+  withState('model', 'setModel', smallFormModel), // model
   withHandlers({
     onSubmit: props => formState => {
       props.setOutput(JSON.stringify(formState, null, 2));
